@@ -1,0 +1,8 @@
+workspace
+java/.idea
+java/.settings
+java/bin
+java/.classpath
+java/.project
+
+python
