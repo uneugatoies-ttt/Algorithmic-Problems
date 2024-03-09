@@ -1,6 +1,5 @@
 package ict_practice_revisit;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,44 +52,50 @@ public class Q12 {
         }
     }
 
+    /*
+        -> We don't have to set the separate case checking for the removal operation,
+        since the checking is simply being done with every part that is contained within
+        the list. whether you're doing the removal or the construction, you'll know if
+        that is not possible.
+     */
     private boolean isPossibleToOperate(List<List<Integer>> res) {
         for (List<Integer> eachres : res) {
-            int x = eachres.get(0);
-            int y = eachres.get(1);
-            int pob = eachres.get(2);
+            int eachx = eachres.get(0);
+            int eachy = eachres.get(1);
+            int eachpob = eachres.get(2);
             // a pillar
-            if (pob == 0) {
+            if (eachpob == 0) {
                 boolean check = false;
-                if (y == 0) check = true;
+                if (eachy == 0) check = true;
 
                 for (List<Integer> j : res) {
                     // There is a beam at (x-1, y)
-                    if (x - 1 == j.get(0) && y == j.get(1) && 1 == j.get(2))
+                    if (eachx - 1 == j.get(0) && eachy == j.get(1) && 1 == j.get(2))
                         check = true;
                     // There is a beam at (x, y)
-                    if (x == j.get(0) && y == j.get(1) && 1 == j.get(2))
+                    if (eachx == j.get(0) && eachy == j.get(1) && 1 == j.get(2))
                         check = true;
                     // There is a pillar at (x, y-1)
-                    if (x == j.get(0) && y - 1 == j.get(1) && 0 == j.get(2))
+                    if (eachx == j.get(0) && eachy - 1 == j.get(1) && 0 == j.get(2))
                         check = true;
                 }
 
                 if (!check) return false;
             }
             // a beam
-            else if (pob == 1) {
+            else if (eachpob == 1) {
                 boolean check = false;
                 boolean left = false;
                 boolean right = false;
 
                 for (List<Integer> j : res) {
-                    if (x == j.get(0) && y - 1 == j.get(1) && 0 == j.get(2))
+                    if (eachx == j.get(0) && eachy - 1 == j.get(1) && 0 == j.get(2))
                         check = true;
-                    if (x + 1 == j.get(0) && y - 1 == j.get(1) && 0 == j.get(2))
+                    if (eachx + 1 == j.get(0) && eachy - 1 == j.get(1) && 0 == j.get(2))
                         check = true;
-                    if (x - 1 == j.get(0) && y == j.get(1) && 1 == j.get(2))
+                    if (eachx - 1 == j.get(0) && eachy == j.get(1) && 1 == j.get(2))
                         left = true;
-                    if (x + 1 == j.get(0) && y == j.get(1) && 1 == j.get(2))
+                    if (eachx + 1 == j.get(0) && eachy == j.get(1) && 1 == j.get(2))
                         right = true;
                 }
 
@@ -106,11 +111,17 @@ public class Q12 {
 
         for (int[] build : build_frame) {
             int x = build[0];
-            int y = build[0];
-            int pob = build[0];
-            int oper = build[0];
+            int y = build[1];
+            int pob = build[2];
+            int oper = build[3];
+
+            // removal
             if (oper == 0) {
                 int ind = 0;
+                // finding the constructed part at that coordinate;
+                // since the problem's description mentioned that there will be no case
+                // where a non-existing part will be said to be removed, "ind" will always
+                // contain the index number of the corresponding part.
                 for (int i = 0; i < res.size(); ++i) {
                     if (x == res.get(i).get(0) && y == res.get(i).get(1) && pob == res.get(i).get(2))
                         ind = i;
@@ -119,7 +130,9 @@ public class Q12 {
                 res.remove(ind);
                 if (!isPossibleToOperate(res))
                     res.add(erased);
-            } else if (oper == 1) {
+            }
+            // construction
+            else if (oper == 1) {
                 List<Integer> inserted = new ArrayList<>();
                 inserted.add(x);
                 inserted.add(y);
