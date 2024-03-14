@@ -17,7 +17,7 @@ curr = []
 for _ in range(m):
     curr.append(0)
 
-def _generate_combination(orig, depth, index, target):
+def generate_combination(orig, depth, index, target):
     if depth == m:
         temp = []
         for i in range(m):
@@ -28,12 +28,12 @@ def _generate_combination(orig, depth, index, target):
     if target == csize: return
 
     curr[index] = target
-    _generate_combination(orig, depth + 1, index + 1, target + 1)
+    generate_combination(orig, depth + 1, index + 1, target + 1)
 
-    _generate_combination(orig, depth, index, target + 1)
+    generate_combination(orig, depth, index, target + 1)
 
 
-_generate_combination(chickens, 0, 0, 0)
+generate_combination(chickens, 0, 0, 0)
 
 result = 1e9
 
