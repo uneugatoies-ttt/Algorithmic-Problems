@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
 
-// probably failed.
+// failed.
 /*
 public class BJ11729 {
 
