@@ -1,5 +1,7 @@
 package baekjoon;
 
+
+/*
 import java.io.*;
 
 
@@ -36,7 +38,7 @@ public class BJ11729_2 {
         solve();
     }
 
-}
+}*/
 
 /*
 public class BJ11729_2 {
