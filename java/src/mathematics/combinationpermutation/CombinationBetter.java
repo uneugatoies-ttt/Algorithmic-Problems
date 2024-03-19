@@ -45,8 +45,8 @@ class Combination<T> {
 		return this.result;
 	}
 	public Combination(int n, int r) {
-		this.n = n;
 		this.r = r;
+		this.n = n;
 		this.curr = new int[r];
 		this.result = new ArrayList<>();
 	}
