@@ -1,61 +1,64 @@
 package ict_practice_revisit;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+
+/*
+    -> I got a problem with understanding the logic of the procedures "lowerBound" and "upperBound":
+    Although I can see that the general idea is the same as the logic that was used in solving "Q27",
+    I don't particularly understand the parts where "arr.get(mid).compareTo(target) >= 0"
+    and "arr.get(mid).compareTo(target) > 0" are used.
+
+    Why can the "lowerBound" procedure find the lower bound?
+    Why can the "upperBound" procedure find the upper bound?
+
+    I don't know yet; IWAAIL.
+*/
+
 
 public class Q30 {
 
+    private static class Solution {
 
-    // UNFINISHED
-/*
-    class Solution {
+        List<List<String>> byLen = new ArrayList<>();
+        List<List<String>> byLenInv = new ArrayList<>();
 
-
-        public int[] solution(String[] words, String[] queries) {
-            Arrays.sort(words);
-
-            for (int i = 0; i < queries.length; ++i) {
-                String target = queries[i];
-                // wildcards are at the end of the entry
-                if (target.charAt(0) != '?') {
-                    int ind = 0;
-                    while (target.charAt(ind) != '?')
-                        ind++;
-                    String head = target.substring(0, ind);
-
-                    int left = 0, right = words.length - 1;
-
-                    while (left <= right) {
-                        int mid = (left + right) / 2;
-                        if (words[mid].length() != entry.length()) {
-                            left = mid + 1;
-                            continue;
-                        }
-                        boolean flag = true;
-                        for (int j = 0; j < head.length(); ++j) {
-                            if (words[mid].charAt(j) != entry.charAt(j)) {
-                                flag = false;
-                                break;
-                            }
-                        }
-
-                        if ()
-
-
-                    }
-
-
-
-                }
-                // wildcards are at the beginning of the entry
-                else {
-
-                }
-
-
+        private int lowerBound(List<String> arr, String target, int start, int end) {
+            int mid;
+            while (start < end) {
+                mid = (start + end) / 2;
+                if (arr.get(mid).compareTo(target) >= 0)
+                    end = mid;
+                else
+                    start = mid + 1;
             }
-
+            return end;
         }
+
+        private int upperBound(List<String> arr, String target, int start, int end) {
+            int mid;
+            while (start < end) {
+                mid = (start + end) / 2;
+                if (arr.get(mid).compareTo(target) > 0)
+                    end = mid;
+                else
+                    start = mid + 1;
+            }
+            return end;
+        }
+
+        private int countByRange(List<String> arr, String left, String rigth) {
+            int leftIndex = lowerBound(arr, left, 0, arr.size());
+            int rightIndex = upperBound(arr, right, 0, arr.size());
+            return rightIndex - leftIndex;
+        }
+
     }
 
-*/
+    public static void main(String[] args) {
+
+    }
+
 }
