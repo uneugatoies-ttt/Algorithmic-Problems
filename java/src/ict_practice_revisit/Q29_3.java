@@ -29,7 +29,7 @@ public class Q29_3 {
                 right = mid - 1;
         }
 
-        return left - 1;
+        return left -1;
     }
 
     private static void solve() throws IOException {
