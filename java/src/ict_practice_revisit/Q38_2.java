@@ -2,13 +2,24 @@ package ict_practice_revisit;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
 
-public class Q37 {
 
-    private static int n, m;
+/*
+    -> If a node B is reachable from another node A, it would mean that A's grade is less than B's;
+    i.e., the two grades can be compared.
+
+    Using this trait, we can check the "dist" array after applying the Floyd Warshall algorithm on the given
+    graph, if "dist[i][j]" and "dist[j][i]" are the same as INF; if they are, they are not comparable; otherwise,
+    increment the "cnt" variable.
+*/
+public class Q38_2 {
+
     private static final int INF = (int) 1e9;
+    private static List<List<Integer>> adj;
     private static int[][] dist;
+    private static int n, m;
 
     private static void floydWarshall() {
         for (int k = 0; k < n; ++k) {
@@ -22,39 +33,40 @@ public class Q37 {
     private static void solve() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        n = Integer.parseInt(br.readLine());
-        m = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
         dist = new int[n][n];
+
         for (int i = 0; i < n; ++i) {
             Arrays.fill(dist[i], INF);
             dist[i][i] = 0;
         }
-        StringTokenizer st;
+
         for (int i = 0; i < m; ++i) {
             st = new StringTokenizer(br.readLine());
             int from = Integer.parseInt(st.nextToken()) - 1;
             int to = Integer.parseInt(st.nextToken()) - 1;
-            int d = Integer.parseInt(st.nextToken());
-            dist[from][to] = Math.min(dist[from][to], d);
+            dist[from][to] = 1;
         }
 
         floydWarshall();
 
-        StringBuilder sb = new StringBuilder();
+        int cnt = 0;
         for (int i = 0; i < n; ++i) {
+            boolean flag = true;
             for (int j = 0; j < n; ++j) {
-                if (dist[i][j] == INF)
-                    sb.append('0');
-                else
-                    sb.append(dist[i][j]);
-
-                if (j != n - 1)
-                    sb.append(' ');
+                if (dist[i][j] == INF) {
+                    if (dist[j][i] == INF) {
+                        flag = false;
+                        break;
+                    }
+                }
             }
-            sb.append('\n');
+            if (flag) cnt++;
         }
 
-        bw.write(sb.toString());
+        bw.write(String.valueOf(cnt));
         bw.flush();
     }
 

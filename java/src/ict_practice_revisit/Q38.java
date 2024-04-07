@@ -1,20 +1,46 @@
 package ict_practice_revisit;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Q38 {
 
+    private static boolean[] checked;
     private static int n, m;
-    private static final int INF = (int) 1e9;
-    private static int[][] dist;
+    private static List<List<Integer>> adj;
 
-    private static void floydWarshall() {
-        for (int k = 0; k < n; ++k) {
-            for (int i = 0; i < n; ++i) {
-                for (int j = 0; j < n; ++j)
-                    dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+    private static void bfsTarget(int start, int target) {
+        boolean[] visited = new boolean[n];
+        Queue<Integer> q = new ArrayDeque();
+        q.add(start);
+        visited[start] = true;
+
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            if (curr == target) {
+                checked[start] = true;
+                return;
+            }
+
+            for (int next : adj.get(curr)) {
+                if (!visited[next])
+                    q.add(next);
+            }
+        }
+    }
+
+    private static void bfsFrom(int start) {
+        Queue<Integer> q = new ArrayDeque();
+        q.add(start);
+        checked[start] = true;
+
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            checked[curr] = true;
+
+            for (int next : adj.get(curr)) {
+                if (!checked[next])
+                    q.add(next);
             }
         }
     }
@@ -22,39 +48,41 @@ public class Q38 {
     private static void solve() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        n = Integer.parseInt(br.readLine());
-        m = Integer.parseInt(br.readLine());
-        dist = new int[n][n];
-        for (int i = 0; i < n; ++i) {
-            Arrays.fill(dist[i], INF);
-            dist[i][i] = 0;
-        }
-        StringTokenizer st;
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        checked = new boolean[n];
+        adj = new ArrayList<>();
+        for (int i = 0; i < n; ++i)
+            adj.add(new ArrayList<>());
         for (int i = 0; i < m; ++i) {
             st = new StringTokenizer(br.readLine());
             int from = Integer.parseInt(st.nextToken()) - 1;
             int to = Integer.parseInt(st.nextToken()) - 1;
-            int d = Integer.parseInt(st.nextToken());
-            dist[from][to] = Math.min(dist[from][to], d);
+            adj.get(from).add(to);
         }
 
-        floydWarshall();
-
-        StringBuilder sb = new StringBuilder();
+        int cnt = 0;
         for (int i = 0; i < n; ++i) {
+            Arrays.fill(checked, false);
+            bfsFrom(i);
+            boolean flag = true;
             for (int j = 0; j < n; ++j) {
-                if (dist[i][j] == INF)
-                    sb.append('0');
-                else
-                    sb.append(dist[i][j]);
+                if (!checked[j]) {
+                    bfsTarget(j, i);
 
-                if (j != n - 1)
-                    sb.append(' ');
+                    if (!checked[j]) {
+                        flag = false;
+                        break;
+                    }
+                }
             }
-            sb.append('\n');
+            if (flag) {
+                cnt++;
+            }
         }
 
-        bw.write(sb.toString());
+        bw.write(String.valueOf(cnt));
         bw.flush();
     }
 
