@@ -1,3 +1,5 @@
+// Solution 2: following the divide and conquer paradigm ver. 2.
+
 /*
 	-> The reason why the former code kept failing:
 		-> It was because the upper part of "maxAreaRect".
