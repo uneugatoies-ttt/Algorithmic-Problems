@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.euclidean;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
